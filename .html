@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothes Store</title>
+    <!-- Підключення шрифту Poppins з Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset and Variables */
+        :root {
+            --primary-red: #f44336;
+            --light-pink: #fecaca;
+            --dark-text: #333;
+            --light-text: #666;
+            --white-bg: #fff;
+            --grey-light: #f0f0f0;
+            --grey-medium: #e0e0e0;
+            --grey-dark: #d0d0d0;
+            --blue-window: #a7d9f7;
+            --blue-window-border: #6cb5e2;
+            --dark-green: #556b6b; /* Для верхньої/земляної площини магазину */
+        }
+
+        /* Загальний скидання стилів для всіх елементів */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Стилі для елемента body */
+        body {
+            font-family: 'Poppins', sans-serif; /* Використання шрифту Poppins */
+            line-height: 1.6;
+            background-color: var(--white-bg); /* Білий фон */
+            color: var(--dark-text); /* Темний колір тексту */
+            overflow-x: hidden; /* Запобігає горизонтальному прокручуванню від абсолютно позиціонованих елементів */
+        }
+
+        /* Контейнер для центрування вмісту */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto; /* Автоматичне центрування */
+            padding: 0 20px;
+            position: relative;
+            min-height: 100vh; /* Забезпечує, що контейнер займає всю висоту вікна перегляду */
+            display: flex;
+            flex-direction: column; /* Розташування елементів по вертикалі */
+        }
+
+        /* Стилі для заголовка (шапки) сайту */
+        header {
+            display: flex;
+            justify-content: space-between; /* Розташування елементів по краях */
+            align-items: center; /* Вирівнювання по центру по вертикалі */
+            padding: 20px 0;
+            margin-bottom: 50px;
+        }
+
+        /* Стилі для логотипу */
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        /* Стилі для головної навігації */
+        .main-nav a {
+            text-decoration: none; /* Прибрати підкреслення */
+            color: var(--dark-text);
+            margin-left: 30px;
+            font-weight: 600;
+            transition: color 0.3s ease; /* Плавний перехід кольору при наведенні */
+        }
+
+        .main-nav a:hover {
+            color: var(--primary-red); /* Зміна кольору при наведенні */
+        }
+
+        /* Стилі для бургер-меню (приховано за замовчуванням на великих екранах) */
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            display: none; /* Приховано за замовчуванням */
+        }
+
+        .hamburger-menu .line {
+            width: 100%;
+            height: 3px;
+            background-color: var(--dark-text);
+            border-radius: 5px;
+        }
+
+        /* Стилі для секції hero (головна секція) */
+        .hero-section {
+            flex-grow: 1; /* Дозволяє секції займати доступний простір */
+            display: flex;
+            align-items: center; /* Вирівнювання по центру по вертикалі */
+            justify-content: space-between; /* Розташування елементів по краях */
+            gap: 40px; /* Відступ між елементами */
+            padding-bottom: 100px; /* Простір для нижніх декоративних ліній */
+        }
+
+        /* Стилі для текстового контенту hero секції */
+        .hero-content {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        /* Стилі для основного заголовка */
+        .title {
+            font-size: 60px;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        /* Стилі для слова "Store" у заголовку */
+        .store-word {
+            color: var(--primary-red); /* Червоний колір */
+            font-weight: 400;
+            display: block; /* Переносить "Store" на новий рядок */
+            margin-top: -10px; /* Регулює вертикальний інтервал */
+        }
+
+        /* Стилі для описового тексту */
+        .description {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        /* Стилі для кнопки "Get Started" */
+        .get-started-btn {
+            background-color: var(--primary-red);
+            color: var(--white-bg);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3); /* Тінь для кнопки */
+        }
+
+        .get-started-btn:hover {
+            background-color: #e53935; /* Зміна кольору при наведенні */
+        }
+
+        /* Стилі для контейнера зображення (ілюстрації магазину) */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding-top: 50px;
+            min-width: 300px; /* Забезпечує мінімальну ширину для зображення */
+        }
+
+        /* Спрощена ізометрична ілюстрація магазину */
+        .shop-illustration {
+            width: 250px;
+            height: 200px;
+            background-color: var(--grey-light); /* Основний колір корпусу будівлі */
+            position: relative;
+            transform: scale(0.9) rotateX(15deg) rotateZ(35deg); /* Базове ізометричне перетворення */
+            transform-origin: bottom center;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.1); /* Тінь для об'єму */
+            border-radius: 5px;
+            z-index: 10; /* Піднімає над фоновими елементами */
+        }
+
+        /* Псевдоелементи для створення 3D-вигляду магазину */
+        .shop-illustration::before { /* Верхня грань (земля/основа) */
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-green); /* Темно-зелений для площини */
+            transform: rotateX(90deg) translateZ(-100px); /* Піднімає над основою */
+            transform-origin: top center;
+            border-radius: 5px;
+        }
+
+        .shop-illustration::after { /* Задня грань */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--grey-medium);
+            transform: rotateY(90deg) translateZ(-250px); /* Відсуває назад */
+            transform-origin: top left;
+            border-radius: 5px;
+        }
+
+        /* Навіс магазину */
+        .shop-awning {
+            position: absolute;
+            width: 120%; /* Ширше, ніж корпус */
+            height: 50px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--primary-red),
+                var(--primary-red) 12px,
+                var(--white-bg) 12px,
+                var(--white-bg) 24px
+            ); /* Смугастий візерунок */
+            top: -50px; /* Позиціонування над корпусом */
+            left: -10%;
+            z-index: 20; /* Над іншими частинами магазину */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white-bg);
+            font-weight: 700;
+            font-size: 20px;
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateZ(50px) rotateX(15deg) rotateZ(35deg) scale(1.1); /* Додаткові перетворення для перспективи */
+            transform-origin: bottom center;
+        }
+
+        .shop-awning::before { /* Для тексту "SHOP" */
+            content: 'SHOP';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: var(--white-bg);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Вікна магазину */
+        .window {
+            position: absolute;
+            width: 60px;
+            height: 70px;
+            background-color: var(--blue-window);
+            border: 2px solid var(--blue-window-border);
+            border-radius: 3px;
+            z-index: 15; /* Перед корпусом, але за навісом */
+            transform: translateZ(1px); /* Трохи висунути вперед */
+        }
+        .window-left {
+            top: 70px;
+            left: 30px;
+            transform: translateZ(1px) rotateX(15deg) rotateZ(35deg) skewY(-10deg); /* Щоб відповідати перспективі */
+            transform-origin: top left;
+        }
+        .window-right {
+            top: 70px;
+            right: 30px;
+            transform: translateZ(1px) rotateX(15deg) rotateZ(35deg) skewY(10deg); /* Щоб відповідати перспективі */
+            transform-origin: top right;
+        }
+
+
+        /* Декоративні фонові елементи (кола) */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: var(--light-pink);
+            opacity: 0.6;
+            z-index: -1; /* Відправляє на задній план */
+        }
+
+        .bg-circle.large {
+            width: 300px;
+            height: 300px;
+            top: 80px;
+            right: -100px;
+        }
+
+        .bg-circle.small-top {
+            width: 100px;
+            height: 100px;
+            top: 400px;
+            right: 120px;
+            opacity: 0.4;
+        }
+
+        .bg-circle.small-bottom-left {
+            width: 150px;
+            height: 150px;
+            bottom: 50px;
+            left: -80px;
+            /* Спрощена форма, схожа на "Pac-Man" */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 50%);
+            opacity: 0.7;
+            transform: rotate(45deg);
+        }
+
+        /* Червоні лінії - спрощені дуги за допомогою border-radius */
+        .bg-line {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.7;
+            border: 2px solid var(--primary-red);
+        }
+
+        .bg-line.line-1 {
+            width: 400px;
+            height: 100px;
+            bottom: 100px;
+            left: -50px;
+            border-color: transparent transparent var(--primary-red) var(--primary-red); /* Тільки ліва та нижня межі */
+            border-radius: 0 0 0 100%; /* Створює четверть кола */
+            transform: rotate(20deg);
+            transform-origin: bottom left;
+        }
+
+        .bg-line.line-2 {
+            width: 300px;
+            height: 80px;
+            bottom: 60px;
+            right: -30px;
+            border-color: transparent var(--primary-red) var(--primary-red) transparent; /* Тільки права та нижня межі */
+            border-radius: 0 0 100% 0; /* Створює четверть кола */
+            transform: rotate(-10deg);
+            transform-origin: bottom right;
+        }
+
+        /* Адаптивні налаштування для мобільних пристроїв */
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap; /* Дозволяє елементам переноситись на новий рядок */
+                justify-content: center; /* Центрування елементів */
+                margin-bottom: 30px;
+            }
+            .main-nav {
+                display: none; /* Приховуємо навігацію на маленьких екранах */
+                width: 100%;
+                text-align: center;
+                margin-top: 15px;
+            }
+            .hamburger-menu {
+                display: flex; /* Показуємо бургер-меню */
+                position: absolute; /* Позиціонуємо абсолютно для кращого контролю */
+                right: 20px; /* Відступ від правого краю */
+                top: 25px; /* Вирівнюємо з логотипом */
+            }
+            .hero-section {
+                flex-direction: column; /* Розташування елементів по вертикалі */
+                text-align: center; /* Центрування тексту */
+                padding-bottom: 50px;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .title {
+                font-size: 48px;
+            }
+            .store-word {
+                font-size: 40px;
+                margin-top: -5px;
+            }
+            .hero-image {
+                order: -1; /* Переміщуємо зображення над текстом на мобільних */
+                padding-top: 0;
+                margin-bottom: 30px;
+            }
+            .shop-illustration {
+                width: 200px;
+                height: 160px;
+            }
+            .shop-awning {
+                top: -40px;
+                height: 40px;
+            }
+            .shop-awning::before {
+                font-size: 20px;
+            }
+            .window {
+                width: 50px;
+                height: 60px;
+            }
+            .window-left { top: 60px; left: 20px; }
+            .window-right { top: 60px; right: 20px; }
+
+            .bg-circle.large {
+                width: 200px;
+                height: 200px;
+                top: 50px;
+                right: -50px;
+            }
+            .bg-circle.small-top {
+                display: none; /* Приховуємо деякі декоративні елементи */
+            }
+            .bg-circle.small-bottom-left {
+                width: 100px;
+                height: 100px;
+                bottom: 20px;
+                left: -30px;
+            }
+            .bg-line.line-1 {
+                width: 300px;
+                height: 80px;
+                bottom: 80px;
+                left: -30px;
+            }
+            .bg-line.line-2 {
+                width: 200px;
+                height: 60px;
+                bottom: 40px;
+                right: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Your Logo</div>
+            <nav class="main-nav">
+                <a href="#">Home</a>
+                <a href="#">Products</a>
+                <a href="#">About</a>
+            </nav>
+            <div class="hamburger-menu">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </header>
+
+        <main class="hero-section">
+            <div class="hero-content">
+                <h1 class="title">Clothes <span class="store-word">Store</span></h1>
+                <p class="description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <button class="get-started-btn">Get Started</button>
+            </div>
+            <div class="hero-image">
+                <div class="shop-illustration">
+                    <div class="shop-awning"></div>
+                    <div class="window window-left"></div>
+                    <div class="window window-right"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Декоративні фонові елементи -->
+        <div class="bg-circle large"></div>
+        <div class="bg-circle small-top">
